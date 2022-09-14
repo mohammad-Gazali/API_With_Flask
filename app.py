@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from actions import bp as actionsbp
 from filters import bp as filtersbp
 from android import bp as androidbp
@@ -44,3 +44,8 @@ def upload_image():
             'message': 'File has successfuly been uploaded',
             'filename': filename
         }), 201
+
+
+@app.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], name)
